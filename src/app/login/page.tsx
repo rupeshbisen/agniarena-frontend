@@ -95,7 +95,10 @@ export default function LoginPage() {
               </Link>
             </div>
 
-            <label htmlFor="email" className="space-y-2 text-sm font-medium text-slate-100/90">
+            <label
+              htmlFor="email"
+              className="space-y-2 text-sm font-medium text-slate-100/90"
+            >
               <span>Email</span>
               <input
                 id="email"
@@ -107,7 +110,10 @@ export default function LoginPage() {
               />
             </label>
 
-            <label htmlFor="password" className="space-y-2 text-sm font-medium text-slate-100/90">
+            <label
+              htmlFor="password"
+              className="space-y-2 text-sm font-medium text-slate-100/90"
+            >
               <span>Password</span>
               <input
                 id="password"
