@@ -14,7 +14,7 @@ const backdropStyle = {
 export default function LoginPage() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
-      <div className="absolute inset-0 -z-10" aria-hidden>
+      <div className="absolute inset-0 -z-10" aria-hidden="true">
         <div className="absolute inset-0 opacity-80" style={backdropStyle} />
         <div className="absolute left-16 top-16 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
         <div className="absolute right-12 bottom-6 h-80 w-80 rounded-full bg-amber-300/10 blur-3xl" />
@@ -27,7 +27,7 @@ export default function LoginPage() {
             <span>Welcome back</span>
             <span
               className="h-1 w-1 rounded-full bg-amber-300/80"
-              aria-hidden
+              aria-hidden="true"
             />
             <span>Secure access</span>
           </div>
@@ -46,7 +46,7 @@ export default function LoginPage() {
             <div className="rounded-xl border border-white/10 bg-white/5 p-4 shadow-sm">
               <div
                 className="mb-2 h-2 w-12 rounded-full bg-cyan-300/70"
-                aria-hidden
+                aria-hidden="true"
               />
               <h3 className="text-base font-semibold text-white">
                 Session continuity
@@ -59,7 +59,7 @@ export default function LoginPage() {
             <div className="rounded-xl border border-white/10 bg-white/5 p-4 shadow-sm">
               <div
                 className="mb-2 h-2 w-12 rounded-full bg-amber-300/70"
-                aria-hidden
+                aria-hidden="true"
               />
               <h3 className="text-base font-semibold text-white">
                 Strong security
@@ -75,7 +75,7 @@ export default function LoginPage() {
         <section className="relative w-full max-w-lg">
           <div
             className="absolute -inset-x-4 -top-8 h-24 rounded-3xl bg-cyan-400/20 blur-3xl"
-            aria-hidden
+            aria-hidden="true"
           />
           <form className="relative flex w-full flex-col gap-6 rounded-2xl border border-white/10 bg-slate-900/70 p-8 shadow-2xl shadow-cyan-900/30 backdrop-blur">
             <div className="flex items-center justify-between">
@@ -95,9 +95,10 @@ export default function LoginPage() {
               </Link>
             </div>
 
-            <label className="space-y-2 text-sm font-medium text-slate-100/90">
+            <label htmlFor="email" className="space-y-2 text-sm font-medium text-slate-100/90">
               <span>Email</span>
               <input
+                id="email"
                 type="email"
                 name="email"
                 required
@@ -106,9 +107,10 @@ export default function LoginPage() {
               />
             </label>
 
-            <label className="space-y-2 text-sm font-medium text-slate-100/90">
+            <label htmlFor="password" className="space-y-2 text-sm font-medium text-slate-100/90">
               <span>Password</span>
               <input
+                id="password"
                 type="password"
                 name="password"
                 required
@@ -136,7 +138,9 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="inline-flex h-12 items-center justify-center rounded-xl bg-linear-to-r from-cyan-400 to-amber-300 px-4 text-base font-semibold text-slate-950 shadow-lg shadow-cyan-900/30 transition hover:brightness-110 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
+              disabled
+              className="inline-flex h-12 items-center justify-center rounded-xl bg-linear-to-r from-cyan-400 to-amber-300 px-4 text-base font-semibold text-slate-950 shadow-lg shadow-cyan-900/30 transition disabled:opacity-50 disabled:cursor-not-allowed hover:brightness-110 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
+              title="Backend integration pending"
             >
               Continue
             </button>
