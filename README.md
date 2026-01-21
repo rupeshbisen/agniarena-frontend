@@ -2,7 +2,7 @@
 
 AgniArena is an **open-source, real-time sports platform** that enables live match scoring, live video streaming, and player auctions for sports tournaments.
 
-Built for scalability, low latency, and transparency � from grassroots tournaments to professional leagues.
+Built for scalability, low latency, and transparency -- from grassroots tournaments to professional leagues.
 
 Website: Coming Soon  
  Docs: Coming Soon
@@ -39,8 +39,8 @@ AgniArena Web Frontend is the **public-facing web application** for viewing live
 ### Installation
 
 ```bash
-git clone https://github.com/rupeshbisen/agniaarena-frontend.git
-cd agniaarena-frontend
+git clone https://github.com/rupeshbisen/agniarena-frontend.git
+cd agniarena-frontend
 npm install
 ```
 
@@ -80,6 +80,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Support
 
-- [Report a Bug](https://github.com/rupeshbisen/agniaarena-frontend/issues)
-- [Request a Feature](https://github.com/rupeshbisen/agniaarena-frontend/issues)
-- [Discussions](https://github.com/rupeshbisen/agniaarena-frontend/discussions)
+- [Report a Bug](https://github.com/rupeshbisen/agniarena-frontend/issues)
+- [Request a Feature](https://github.com/rupeshbisen/agniarena-frontend/issues)
+- [Discussions](https://github.com/rupeshbisen/agniarena-frontend/discussions)
