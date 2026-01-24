@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 // Note: Metadata is defined in layout.tsx
 
@@ -16,6 +16,9 @@ export default function ForgotPasswordPage() {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  // Refs for OTP inputs
+  const otpRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleSendOtp = (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,6 +38,11 @@ export default function ForgotPasswordPage() {
     console.log('Password reset complete');
   };
 
+  const handleBackToEmail = () => {
+    setStep('email');
+    setOtp(['', '', '', '', '', '']); // Clear OTP when going back
+  };
+
   const handleOtpChange = (index: number, value: string) => {
     if (value.length > 1) return;
     if (!/^\d*$/.test(value)) return;
@@ -45,8 +53,7 @@ export default function ForgotPasswordPage() {
 
     // Auto-focus next input
     if (value && index < 5) {
-      const nextInput = document.getElementById(`otp-${index + 1}`);
-      nextInput?.focus();
+      otpRefs.current[index + 1]?.focus();
     }
   };
 
@@ -55,8 +62,7 @@ export default function ForgotPasswordPage() {
     e: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (e.key === 'Backspace' && !otp[index] && index > 0) {
-      const prevInput = document.getElementById(`otp-${index - 1}`);
-      prevInput?.focus();
+      otpRefs.current[index - 1]?.focus();
     }
   };
   return (
@@ -208,7 +214,9 @@ export default function ForgotPasswordPage() {
                     {otp.map((digit, index) => (
                       <input
                         key={index}
-                        id={`otp-${index}`}
+                        ref={(el) => {
+                          otpRefs.current[index] = el;
+                        }}
                         type="text"
                         inputMode="numeric"
                         maxLength={1}
@@ -224,7 +232,7 @@ export default function ForgotPasswordPage() {
 
                 <button
                   type="button"
-                  onClick={() => setStep('email')}
+                  onClick={handleBackToEmail}
                   className="text-sm text-cyan-200 hover:text-cyan-100 transition"
                 >
                   ← Change email address
