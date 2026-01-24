@@ -1,10 +1,9 @@
-import type { Metadata } from 'next';
-import Link from 'next/link';
+'use client';
 
-export const metadata: Metadata = {
-  title: 'Forgot Password | Agni Arena',
-  description: 'Reset your Agni Arena password.',
-};
+import Link from 'next/link';
+import { useState } from 'react';
+
+// Note: Metadata is defined in layout.tsx
 
 const backdropStyle = {
   background:
@@ -12,6 +11,54 @@ const backdropStyle = {
 };
 
 export default function ForgotPasswordPage() {
+  const [step, setStep] = useState<'email' | 'otp' | 'password'>('email');
+  const [email, setEmail] = useState('');
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleSendOtp = (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: Backend integration - send OTP to email
+    setStep('otp');
+  };
+
+  const handleVerifyOtp = (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: Backend integration - verify OTP
+    setStep('password');
+  };
+
+  const handleResetPassword = (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: Backend integration - reset password
+    console.log('Password reset complete');
+  };
+
+  const handleOtpChange = (index: number, value: string) => {
+    if (value.length > 1) return;
+    if (!/^\d*$/.test(value)) return;
+
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
+
+    // Auto-focus next input
+    if (value && index < 5) {
+      const nextInput = document.getElementById(`otp-${index + 1}`);
+      nextInput?.focus();
+    }
+  };
+
+  const handleOtpKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      const prevInput = document.getElementById(`otp-${index - 1}`);
+      prevInput?.focus();
+    }
+  };
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
       <div className="absolute inset-0 -z-10" aria-hidden="true">
@@ -34,12 +81,18 @@ export default function ForgotPasswordPage() {
 
           <div className="space-y-3">
             <h1 className="text-4xl font-semibold leading-[1.05] text-white sm:text-5xl">
-              Reset your password
+              {step === 'email'
+                ? 'Reset your password'
+                : step === 'otp'
+                  ? 'Verify OTP'
+                  : 'Set new password'}
             </h1>
             <p className="max-w-2xl text-base text-slate-200/80 sm:text-lg">
-              Enter your email address and we&apos;ll send you a secure link to
-              reset your password. The link will expire after 24 hours for your
-              security.
+              {step === 'email'
+                ? "Enter your email address and we'll send you a one-time password (OTP) to verify your identity."
+                : step === 'otp'
+                  ? `We've sent a 6-digit OTP to ${email}. Enter it below to continue.`
+                  : 'Create a strong password to secure your account.'}
             </p>
           </div>
 
@@ -50,11 +103,12 @@ export default function ForgotPasswordPage() {
                 aria-hidden="true"
               />
               <h3 className="text-base font-semibold text-white">
-                Quick recovery
+                {step === 'email' ? 'OTP verification' : 'Quick process'}
               </h3>
               <p className="mt-1 text-sm text-slate-200/75">
-                Receive a password reset link instantly in your inbox to regain
-                access to your account.
+                {step === 'email'
+                  ? 'Receive a one-time password instantly in your email to verify your identity.'
+                  : 'Complete the verification process quickly and regain access to your account.'}
               </p>
             </div>
             <div className="rounded-xl border border-white/10 bg-white/5 p-4 shadow-sm">
@@ -66,8 +120,9 @@ export default function ForgotPasswordPage() {
                 Secure process
               </h3>
               <p className="mt-1 text-sm text-slate-200/75">
-                Time-limited reset links and email verification ensure your
-                account stays protected.
+                {step === 'email'
+                  ? 'Time-limited OTP codes and email verification ensure your account stays protected.'
+                  : 'Your new password will be encrypted and securely stored to protect your account.'}
               </p>
             </div>
           </div>
@@ -78,14 +133,31 @@ export default function ForgotPasswordPage() {
             className="absolute -inset-x-4 -top-8 h-24 rounded-3xl bg-cyan-400/20 blur-3xl"
             aria-hidden="true"
           />
-          <form className="relative flex w-full flex-col gap-6 rounded-2xl border border-white/10 bg-slate-900/70 p-8 shadow-2xl shadow-cyan-900/30 backdrop-blur">
+          <form
+            onSubmit={
+              step === 'email'
+                ? handleSendOtp
+                : step === 'otp'
+                  ? handleVerifyOtp
+                  : handleResetPassword
+            }
+            className="relative flex w-full flex-col gap-6 rounded-2xl border border-white/10 bg-slate-900/70 p-8 shadow-2xl shadow-cyan-900/30 backdrop-blur"
+          >
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs uppercase tracking-[0.25em] text-slate-200/60">
-                  Password reset
+                  {step === 'email'
+                    ? 'Password reset'
+                    : step === 'otp'
+                      ? 'OTP verification'
+                      : 'New password'}
                 </p>
                 <h2 className="text-xl font-semibold text-white">
-                  Forgot password?
+                  {step === 'email'
+                    ? 'Forgot password?'
+                    : step === 'otp'
+                      ? 'Enter OTP'
+                      : 'Create password'}
                 </h2>
               </div>
               <Link
@@ -96,29 +168,134 @@ export default function ForgotPasswordPage() {
               </Link>
             </div>
 
-            <label
-              htmlFor="email"
-              className="space-y-2 text-sm font-medium text-slate-100/90"
-            >
-              <span>Email</span>
-              <input
-                id="email"
-                type="email"
-                name="email"
-                required
-                placeholder="you@example.com"
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-base text-white outline-none ring-0 transition focus:border-cyan-300/60 focus:bg-white/10"
-              />
-            </label>
+            {step === 'email' && (
+              <>
+                <label
+                  htmlFor="email"
+                  className="space-y-2 text-sm font-medium text-slate-100/90"
+                >
+                  <span>Email</span>
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    placeholder="you@example.com"
+                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-base text-white outline-none ring-0 transition focus:border-cyan-300/60 focus:bg-white/10"
+                  />
+                </label>
 
-            <button
-              type="submit"
-              disabled
-              className="inline-flex h-12 items-center justify-center rounded-xl bg-gradient-to-r from-cyan-400 to-amber-300 px-4 text-base font-semibold text-slate-950 shadow-lg shadow-cyan-900/30 transition disabled:opacity-50 disabled:cursor-not-allowed hover:brightness-110 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
-              title="Backend integration pending"
-            >
-              Send reset link
-            </button>
+                <button
+                  type="submit"
+                  disabled
+                  className="inline-flex h-12 items-center justify-center rounded-xl bg-gradient-to-r from-cyan-400 to-amber-300 px-4 text-base font-semibold text-slate-950 shadow-lg shadow-cyan-900/30 transition disabled:opacity-50 disabled:cursor-not-allowed hover:brightness-110 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
+                  title="Backend integration pending"
+                >
+                  Send OTP
+                </button>
+              </>
+            )}
+
+            {step === 'otp' && (
+              <>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-slate-100/90">
+                    Enter 6-digit OTP
+                  </label>
+                  <div className="flex gap-2 justify-between">
+                    {otp.map((digit, index) => (
+                      <input
+                        key={index}
+                        id={`otp-${index}`}
+                        type="text"
+                        inputMode="numeric"
+                        maxLength={1}
+                        value={digit}
+                        onChange={(e) => handleOtpChange(index, e.target.value)}
+                        onKeyDown={(e) => handleOtpKeyDown(index, e)}
+                        className="w-full h-14 text-center text-2xl font-semibold rounded-xl border border-white/10 bg-white/5 text-white outline-none ring-0 transition focus:border-cyan-300/60 focus:bg-white/10"
+                        required
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setStep('email')}
+                  className="text-sm text-cyan-200 hover:text-cyan-100 transition"
+                >
+                  ← Change email address
+                </button>
+
+                <button
+                  type="submit"
+                  disabled
+                  className="inline-flex h-12 items-center justify-center rounded-xl bg-gradient-to-r from-cyan-400 to-amber-300 px-4 text-base font-semibold text-slate-950 shadow-lg shadow-cyan-900/30 transition disabled:opacity-50 disabled:cursor-not-allowed hover:brightness-110 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
+                  title="Backend integration pending"
+                >
+                  Verify OTP
+                </button>
+
+                <button
+                  type="button"
+                  className="text-sm text-slate-200/80 hover:text-cyan-200 transition"
+                  disabled
+                  title="Backend integration pending"
+                >
+                  Didn&apos;t receive OTP? Resend
+                </button>
+              </>
+            )}
+
+            {step === 'password' && (
+              <>
+                <label
+                  htmlFor="newPassword"
+                  className="space-y-2 text-sm font-medium text-slate-100/90"
+                >
+                  <span>New Password</span>
+                  <input
+                    id="newPassword"
+                    type="password"
+                    name="newPassword"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    required
+                    placeholder="********"
+                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-base text-white outline-none ring-0 transition focus:border-cyan-300/60 focus:bg-white/10"
+                  />
+                </label>
+
+                <label
+                  htmlFor="confirmPassword"
+                  className="space-y-2 text-sm font-medium text-slate-100/90"
+                >
+                  <span>Confirm Password</span>
+                  <input
+                    id="confirmPassword"
+                    type="password"
+                    name="confirmPassword"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                    placeholder="********"
+                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-base text-white outline-none ring-0 transition focus:border-cyan-300/60 focus:bg-white/10"
+                  />
+                </label>
+
+                <button
+                  type="submit"
+                  disabled
+                  className="inline-flex h-12 items-center justify-center rounded-xl bg-gradient-to-r from-cyan-400 to-amber-300 px-4 text-base font-semibold text-slate-950 shadow-lg shadow-cyan-900/30 transition disabled:opacity-50 disabled:cursor-not-allowed hover:brightness-110 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
+                  title="Backend integration pending"
+                >
+                  Reset Password
+                </button>
+              </>
+            )}
 
             <p className="text-center text-sm text-slate-200/80">
               Remember your password?
