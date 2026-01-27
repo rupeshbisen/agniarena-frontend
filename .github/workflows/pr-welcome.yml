@@ -31,7 +31,8 @@ jobs:
             );
             
             const headRepo = context.payload.pull_request.head.repo;
-            const isFork = headRepo ? headRepo.full_name !== context.repo.owner + '/' + context.repo.repo : false;
+            const baseRepo = `${context.repo.owner}/${context.repo.repo}`;
+            const isFork = headRepo ? headRepo.full_name !== baseRepo : false;
             
             core.setOutput('is_collaborator', isCollaborator);
             core.setOutput('is_fork', isFork);
