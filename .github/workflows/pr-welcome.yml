@@ -30,18 +30,21 @@ jobs:
               collab => collab.login === context.payload.pull_request.user.login
             );
             
-            const isFork = context.payload.pull_request.head.repo.full_name !== context.repo.owner + '/' + context.repo.repo;
+            const headRepo = context.payload.pull_request.head.repo;
+            const isFork = headRepo ? headRepo.full_name !== context.repo.owner + '/' + context.repo.repo : false;
             
-            return { isCollaborator, isFork };
+            core.setOutput('is_collaborator', isCollaborator);
+            core.setOutput('is_fork', isFork);
 
       - name: Post welcome and workflow info comment
         uses: actions/github-script@v7
         with:
           script: |
-            const { isCollaborator, isFork } = ${{ steps.check_contributor.outputs.result }};
+            const isCollaborator = '${{ steps.check_contributor.outputs.is_collaborator }}' === 'true';
+            const isFork = '${{ steps.check_contributor.outputs.is_fork }}' === 'true';
             
             let message = '👋 **Welcome to AgniArena!**\n\n';
-            message += 'Thank you for your contribution! Here\'s what happens next:\n\n';
+            message += 'Thank you for your contribution! Here is what happens next:\n\n';
             
             if (!isCollaborator || isFork) {
               message += '### ⏳ Workflow Approval Required\n\n';
