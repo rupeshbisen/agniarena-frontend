@@ -87,7 +87,7 @@ This will run:
 - Type checking (`npm run type-check`)
 - Linting (`npm run lint`)
 
-**Note for First-Time Contributors:** When you open a PR from a fork, GitHub requires a maintainer to approve workflow runs for security reasons. Don't worry! A maintainer will review and approve your workflow shortly, and then the automated checks will run. Future commits to your PR will run automatically after the initial approval.
+**Automated CI Checks:** When you open a PR, automated quality checks will run automatically. These same checks will be executed to ensure code quality.
 
 ## License
 

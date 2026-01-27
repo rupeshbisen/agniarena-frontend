@@ -25,15 +25,15 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo
             });
-            
+
             const isCollaborator = collaborators.some(
               collab => collab.login === context.payload.pull_request.user.login
             );
-            
+
             const headRepo = context.payload.pull_request.head.repo;
             const baseRepo = `${context.repo.owner}/${context.repo.repo}`;
             const isFork = headRepo ? headRepo.full_name !== baseRepo : false;
-            
+
             core.setOutput('is_collaborator', isCollaborator);
             core.setOutput('is_fork', isFork);
 
@@ -43,31 +43,18 @@ jobs:
           script: |
             const isCollaborator = '${{ steps.check_contributor.outputs.is_collaborator }}' === 'true';
             const isFork = '${{ steps.check_contributor.outputs.is_fork }}' === 'true';
-            
+
             let message = '👋 **Welcome to AgniArena!**\n\n';
-            message += 'Thank you for your contribution! Here is what happens next:\n\n';
-            
-            if (!isCollaborator || isFork) {
-              message += '### ⏳ Workflow Approval Required\n\n';
-              message += 'As a first-time contributor or fork PR, the automated quality checks require approval from a maintainer before they can run. This is a GitHub security feature to protect the repository.\n\n';
-              message += '**A maintainer will review and approve the workflow runs shortly.**\n\n';
-              message += 'Once approved, the following checks will run automatically:\n';
-            } else {
-              message += '### ✅ Automated Checks Running\n\n';
-              message += 'The following quality checks are running:\n';
-            }
-            
+            message += 'Thank you for your contribution!\n\n';
+
+            message += '### ✅ Automated Checks Running\n\n';
+            message += 'The following quality checks are running automatically:\n';
             message += '- ✨ Code formatting (`npm run format:check`)\n';
             message += '- 🔍 Type checking (`npm run type-check`)\n';
             message += '- 📋 Linting (`npm run lint`)\n';
             message += '- 🏗️  Build validation (`npm run build`)\n\n';
-            message += '💡 **Tip:** Run `npm run quality` locally before pushing to catch issues early!\n\n';
-            
-            if (!isCollaborator || isFork) {
-              message += '---\n\n';
-              message += '*Once a maintainer approves your workflows, future commits to this PR will run automatically.*';
-            }
-            
+            message += '💡 **Tip:** Run `npm run quality` locally before pushing to catch issues early!\n';
+
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
