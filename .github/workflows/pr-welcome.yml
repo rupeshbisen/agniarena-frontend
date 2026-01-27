@@ -1,0 +1,72 @@
+name: PR Welcome
+
+# This workflow runs immediately for all PRs (including forks) to provide
+# visibility and welcome messages. It uses pull_request_target safely by
+# not checking out any code from the PR.
+on:
+  pull_request_target:
+    types: [opened]
+    branches: [main, dev]
+
+jobs:
+  welcome:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      # Note: We do NOT checkout any code from the PR for security reasons
+      - name: Check if first-time contributor
+        id: check_contributor
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: collaborators } = await github.rest.repos.listCollaborators({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            
+            const isCollaborator = collaborators.some(
+              collab => collab.login === context.payload.pull_request.user.login
+            );
+            
+            const isFork = context.payload.pull_request.head.repo.full_name !== context.repo.owner + '/' + context.repo.repo;
+            
+            return { isCollaborator, isFork };
+
+      - name: Post welcome and workflow info comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { isCollaborator, isFork } = ${{ steps.check_contributor.outputs.result }};
+            
+            let message = '👋 **Welcome to AgniArena!**\n\n';
+            message += 'Thank you for your contribution! Here\'s what happens next:\n\n';
+            
+            if (!isCollaborator || isFork) {
+              message += '### ⏳ Workflow Approval Required\n\n';
+              message += 'As a first-time contributor or fork PR, the automated quality checks require approval from a maintainer before they can run. This is a GitHub security feature to protect the repository.\n\n';
+              message += '**A maintainer will review and approve the workflow runs shortly.**\n\n';
+              message += 'Once approved, the following checks will run automatically:\n';
+            } else {
+              message += '### ✅ Automated Checks Running\n\n';
+              message += 'The following quality checks are running:\n';
+            }
+            
+            message += '- ✨ Code formatting (`npm run format:check`)\n';
+            message += '- 🔍 Type checking (`npm run type-check`)\n';
+            message += '- 📋 Linting (`npm run lint`)\n';
+            message += '- 🏗️  Build validation (`npm run build`)\n\n';
+            message += '💡 **Tip:** Run `npm run quality` locally before pushing to catch issues early!\n\n';
+            
+            if (!isCollaborator || isFork) {
+              message += '---\n\n';
+              message += '*Once a maintainer approves your workflows, future commits to this PR will run automatically.*';
+            }
+            
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: message
+            });

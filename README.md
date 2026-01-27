@@ -74,6 +74,21 @@ We welcome contributions! Please follow these steps:
 4. Push to the branch (\git push origin feature/amazing-feature\)
 5. Open a Pull Request
 
+### Quality Checks
+
+Before submitting your PR, run the quality checks locally:
+
+```bash
+npm run quality
+```
+
+This will run:
+- Code formatting check (`npm run format:check`)
+- Type checking (`npm run type-check`)
+- Linting (`npm run lint`)
+
+**Note for First-Time Contributors:** When you open a PR from a fork, GitHub requires a maintainer to approve workflow runs for security reasons. Don't worry! A maintainer will review and approve your workflow shortly, and then the automated checks will run. Future commits to your PR will run automatically after the initial approval.
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
