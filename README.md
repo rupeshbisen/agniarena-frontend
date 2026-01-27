@@ -74,6 +74,21 @@ We welcome contributions! Please follow these steps:
 4. Push to the branch (\git push origin feature/amazing-feature\)
 5. Open a Pull Request
 
+### Quality Checks
+
+Before submitting your PR, run the quality checks locally:
+
+```bash
+npm run quality
+```
+
+This will run:
+- Code formatting check (`npm run format:check`)
+- Type checking (`npm run type-check`)
+- Linting (`npm run lint`)
+
+**Automated CI Checks:** When you open a PR, automated quality checks will run automatically. These same checks will be executed to ensure code quality.
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.

@@ -1,0 +1,63 @@
+name: PR Welcome
+
+# This workflow runs immediately for all PRs (including forks) to provide
+# visibility and welcome messages. It uses pull_request_target safely by
+# not checking out any code from the PR.
+on:
+  pull_request_target:
+    types: [opened]
+    branches: [main, dev]
+
+jobs:
+  welcome:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      # Note: We do NOT checkout any code from the PR for security reasons
+      - name: Check if first-time contributor
+        id: check_contributor
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: collaborators } = await github.rest.repos.listCollaborators({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+
+            const isCollaborator = collaborators.some(
+              collab => collab.login === context.payload.pull_request.user.login
+            );
+
+            const headRepo = context.payload.pull_request.head.repo;
+            const baseRepo = `${context.repo.owner}/${context.repo.repo}`;
+            const isFork = headRepo ? headRepo.full_name !== baseRepo : false;
+
+            core.setOutput('is_collaborator', isCollaborator);
+            core.setOutput('is_fork', isFork);
+
+      - name: Post welcome and workflow info comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const isCollaborator = '${{ steps.check_contributor.outputs.is_collaborator }}' === 'true';
+            const isFork = '${{ steps.check_contributor.outputs.is_fork }}' === 'true';
+
+            let message = '👋 **Welcome to AgniArena!**\n\n';
+            message += 'Thank you for your contribution!\n\n';
+
+            message += '### ✅ Automated Checks Running\n\n';
+            message += 'The following quality checks are running automatically:\n';
+            message += '- ✨ Code formatting (`npm run format:check`)\n';
+            message += '- 🔍 Type checking (`npm run type-check`)\n';
+            message += '- 📋 Linting (`npm run lint`)\n';
+            message += '- 🏗️  Build validation (`npm run build`)\n\n';
+            message += '💡 **Tip:** Run `npm run quality` locally before pushing to catch issues early!\n';
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: message
+            });
