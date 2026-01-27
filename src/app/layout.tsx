@@ -18,6 +18,8 @@ export const metadata: Metadata = {
     'Open-source real-time sports platform for live match scoring, live video streaming, and player auctions. From grassroots tournaments to professional leagues.',
 };
 
+import Footer from '@/src/components/Footer';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -26,9 +28,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        {children}
+        <main className="grow">{children}</main>
+        <Footer />
       </body>
     </html>
   );
