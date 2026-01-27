@@ -1,5 +1,12 @@
 name: PR Check
 
+# Security Note: This workflow uses pull_request_target to allow fork PRs to run
+# automatically without requiring manual approval. This is safe because:
+# 1. We only run read-only operations (linting, type-check, build)
+# 2. No secrets are exposed or used
+# 3. No deployment or write operations occur
+# 4. persist-credentials: false prevents credential leakage
+# 5. We explicitly checkout the PR code with the head SHA
 on:
   pull_request_target:
     types: [opened, synchronize, reopened]
