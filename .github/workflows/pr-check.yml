@@ -70,15 +70,30 @@ jobs:
         with:
           script: |
             const jobStatus = '${{ job.status }}';
-            const state = jobStatus === 'success' ? 'success' : 'failure';
-            const description = jobStatus === 'success' 
-              ? 'All quality checks passed' 
-              : 'Quality checks failed';
+            let state, description;
+
+            switch(jobStatus) {
+              case 'success':
+                state = 'success';
+                description = 'All quality checks passed';
+                break;
+              case 'failure':
+                state = 'failure';
+                description = 'Quality checks failed';
+                break;
+              case 'cancelled':
+                state = 'error';
+                description = 'Quality checks were cancelled';
+                break;
+              default:
+                state = 'error';
+                description = 'Quality checks did not complete';
+            }
 
             await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              sha: context.payload.pull_request.head.sha,
+              sha: '${{ github.event.pull_request.head.sha }}',
               state: state,
               context: 'Checks',
               description: description,
