@@ -432,7 +432,7 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-zinc-400 transition-colors hover:text-white"
-                  aria-label="GitHub"
+                  aria-label="Visit AgniArena on GitHub"
                 >
                   <svg
                     className="h-6 w-6"
