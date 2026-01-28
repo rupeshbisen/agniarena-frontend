@@ -184,13 +184,13 @@ We follow conventional commit messages for clarity and consistency:
 ### Examples
 
 ```bash
-feat(scoring): add real-time score updates via WebSocket
+feat(scoring): Add real-time score updates via WebSocket
 
-fix(video): resolve HLS stream playback issue on mobile
+fix(video): Resolve HLS stream playback issue on mobile
 
-docs(readme): update installation instructions
+docs(readme): Update installation instructions
 
-chore(deps): update next.js to version 16.1.3
+chore(deps): Update Next.js to version 16.1.3
 ```
 
 ### Tips
@@ -198,7 +198,7 @@ chore(deps): update next.js to version 16.1.3
 - Use the imperative mood ("add" not "added" or "adds")
 - Keep the subject line under 72 characters
 - Capitalize the subject line
-- Don't end the subject line with a period
+- Do not end the subject line with a period
 - Separate subject from body with a blank line
 - Use the body to explain what and why, not how
 
