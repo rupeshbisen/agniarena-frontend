@@ -197,7 +197,7 @@ export default function Home() {
               </div>
               <h3 className="mb-3 text-xl font-semibold">SEO Optimized</h3>
               <p className="text-zinc-400">
-                SEO-friendly match pages built with Next.js 14. Improve
+                SEO-friendly match pages built with Next.js. Improve
                 discoverability and reach more fans organically.
               </p>
             </div>
