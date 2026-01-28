@@ -1,0 +1,88 @@
+name: 📚 Documentation Improvement
+description: Suggest improvements or report issues with documentation
+title: "[Docs]: "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve our documentation! Please fill out the form below.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Documentation Issue
+      description: What documentation needs to be improved or added?
+      placeholder: Describe the documentation issue or improvement
+    validations:
+      required: true
+
+  - type: dropdown
+    id: doc-type
+    attributes:
+      label: Documentation Type
+      description: What type of documentation does this relate to?
+      options:
+        - README
+        - Contributing Guidelines
+        - Code Comments
+        - API Documentation
+        - User Guide
+        - Setup Instructions
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Location
+      description: Where is this documentation located? (file path or URL)
+      placeholder: e.g., README.md, docs/setup.md, https://...
+
+  - type: textarea
+    id: current-state
+    attributes:
+      label: Current State
+      description: What's currently written (if applicable)?
+      placeholder: Quote the current documentation or describe what's missing
+
+  - type: textarea
+    id: proposed-improvement
+    attributes:
+      label: Proposed Improvement
+      description: What should be changed or added?
+      placeholder: Describe how the documentation should be improved
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: Reason for Change
+      description: Why is this improvement needed?
+      placeholder: Explain why this change would be helpful
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      description: Would you be willing to make this documentation change?
+      options:
+        - label: I'd be willing to submit a PR for this documentation improvement
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context about the documentation improvement
+      placeholder: Any additional information that might help
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/rupeshbisen/agniarena-frontend/blob/main/CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
