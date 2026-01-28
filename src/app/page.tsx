@@ -432,11 +432,14 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-zinc-400 transition-colors hover:text-white"
+                  aria-label="GitHub"
                 >
                   <svg
                     className="h-6 w-6"
                     fill="currentColor"
                     viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    focusable={false}
                   >
                     <path
                       fillRule="evenodd"
