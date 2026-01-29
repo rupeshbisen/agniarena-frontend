@@ -53,4 +53,4 @@ assignees: ''
 
 **Code of Conduct**
 
-By submitting this issue, I agree to follow this project's [Code of Conduct](https://github.com/rupeshbisen/agniarena-frontend/blob/main/CODE_OF_CONDUCT.md)
+- [ ] I agree to follow this project's [Code of Conduct](https://github.com/rupeshbisen/agniarena-frontend/blob/main/CODE_OF_CONDUCT.md)
