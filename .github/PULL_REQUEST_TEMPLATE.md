@@ -73,17 +73,23 @@ Relates to #
 
 ## Quality Checks
 
-<!-- Confirm that you've run all quality checks -->
+<!-- Confirm that you've run all quality checks that match the CI pipeline -->
 
-- [ ] My code follows the style guidelines of this project
+**CI Checks (Required):**
+- [ ] ✅ Formatting: `npm run format:check` passes
+- [ ] ✅ Type Check: `npm run type-check` passes
+- [ ] ✅ Linting: `npm run lint` passes
+- [ ] ✅ Build: `npm run build` succeeds
+
+**Quick Check (Recommended):**
+- [ ] Run `npm run quality` locally (runs format:check, type-check, and lint)
+
+**Code Quality:**
 - [ ] I have performed a self-review of my own code
+- [ ] My code follows the project's style guidelines
 - [ ] I have commented my code, particularly in hard-to-understand areas
 - [ ] I have made corresponding changes to the documentation
-- [ ] My changes generate no new warnings
-- [ ] I have run `npm run quality` and all checks pass
-- [ ] I have run `npm run build` and the build succeeds
 - [ ] I have tested my changes locally and they work as expected
-- [ ] I have checked for any console errors or warnings
 
 ## Breaking Changes
 
@@ -104,11 +110,11 @@ Relates to #
 <!-- Verify that you've completed all required steps -->
 
 - [ ] I have read the [CONTRIBUTING](https://github.com/rupeshbisen/agniarena-frontend/blob/main/CONTRIBUTING.md) guidelines
-- [ ] I have followed the commit message format
+- [ ] I have followed the commit message format (conventional commits)
 - [ ] I have updated the documentation (if necessary)
 - [ ] I have added tests that prove my fix is effective or that my feature works (if applicable)
-- [ ] All new and existing tests pass locally
 - [ ] I have rebased my branch on the latest main/dev branch
+- [ ] All CI checks pass (formatting, type-check, linting, build)
 - [ ] I agree to follow the [Code of Conduct](https://github.com/rupeshbisen/agniarena-frontend/blob/main/CODE_OF_CONDUCT.md)
 
 ## Reviewer Notes
