@@ -9,15 +9,18 @@ assignees: ''
 ## Feature Description
 
 <!-- A clear and concise description of the feature you'd like to see -->
+<!-- REQUIRED: Please provide a detailed description of the feature -->
 
 ## Problem Statement
 
 <!-- Is your feature request related to a problem? Please describe -->
+<!-- REQUIRED: Explain the problem this feature would solve -->
 <!-- e.g., I'm always frustrated when... -->
 
 ## Proposed Solution
 
 <!-- Describe the solution you'd like. How would you like this feature to work? -->
+<!-- REQUIRED: Please provide your proposed solution -->
 
 ## Alternatives Considered
 
@@ -34,6 +37,7 @@ assignees: ''
 ## Priority
 
 <!-- How important is this feature to you? -->
+<!-- Please select ONLY ONE option below -->
 
 - [ ] Low - Nice to have
 - [ ] Medium - Would significantly improve experience

@@ -9,10 +9,12 @@ assignees: ''
 ## Documentation Issue
 
 <!-- What documentation needs to be improved or added? -->
+<!-- REQUIRED: Please provide a detailed description -->
 
 ## Documentation Type
 
 <!-- What type of documentation does this relate to? -->
+<!-- Please select ONLY ONE option below -->
 
 - [ ] README
 - [ ] Contributing Guidelines
@@ -34,6 +36,7 @@ assignees: ''
 ## Proposed Improvement
 
 <!-- What should be changed or added? Describe how the documentation should be improved -->
+<!-- REQUIRED: Please describe your proposed improvement -->
 
 ## Reason for Change
 

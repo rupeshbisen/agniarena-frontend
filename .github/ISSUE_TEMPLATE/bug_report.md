@@ -9,10 +9,12 @@ assignees: ''
 ## Bug Description
 
 <!-- A clear and concise description of what the bug is -->
+<!-- REQUIRED: Please provide a detailed description -->
 
 ## Steps to Reproduce
 
 <!-- Steps to reproduce the behavior -->
+<!-- REQUIRED: Please provide clear steps to reproduce the issue -->
 
 1. Go to '...'
 2. Click on '...'
@@ -22,10 +24,12 @@ assignees: ''
 ## Expected Behavior
 
 <!-- What did you expect to happen? -->
+<!-- REQUIRED: Please describe the expected behavior -->
 
 ## Actual Behavior
 
 <!-- What actually happened? -->
+<!-- REQUIRED: Please describe what actually happened -->
 
 ## Screenshots
 
@@ -33,10 +37,10 @@ assignees: ''
 
 ## Environment
 
-**Browser:**
+**Browser:** <!-- REQUIRED -->
 <!-- e.g., Chrome 120, Firefox 121, Safari 17 -->
 
-**Operating System:**
+**Operating System:** <!-- REQUIRED -->
 <!-- e.g., Windows 11, macOS 14, Ubuntu 22.04 -->
 
 **Node.js Version (if applicable):**
